@@ -11,11 +11,16 @@
             </div>
         </div>
         <div class="column middle aligned content center" align="center">
-            <h1>100.00 CHF</h1>
-            <button class="massive ui right labeled icon button primary">
-                <i class="right arrow icon"></i>
-                PAY HER
-            </button>
+            <p ng-hide="complete">
+                <h1>100.00 CHF</h1>
+                <button class="massive ui right labeled icon button primary">
+                    <i class="right arrow icon"></i>
+                    PAY HER
+                </button>
+            </p>
+            <p ng-show="complete">
+                <img class="ui small image" src="/images/Certificate-512.png">
+            </p>
         </div>
         <div class="column">
             <div class="ui fluid card">
