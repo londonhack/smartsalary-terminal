@@ -7,3 +7,4 @@ node_modules
 dist
 bower_components
 test/bower_components
+.idea
