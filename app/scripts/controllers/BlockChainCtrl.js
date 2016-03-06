@@ -32,6 +32,7 @@
             $scope.$apply(function() {
                 event.receiver = _this.resolveName(event.args.receiver);
                 event.sender = _this.resolveName(event.args.sender);
+                event.amount = parseInt(event.args.amount)/100;
                 event.accepted=false;
                 $scope.logs.push(event);
             });
