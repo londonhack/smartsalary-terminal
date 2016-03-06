@@ -5,9 +5,9 @@
         .module('MainRouter', ['ngRoute'])
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider.
-                when('/pagination', {
-                    templateUrl: 'partials/pagination-list.html',
-                    controller: 'PaginationCtrl',
+                when('/', {
+                    templateUrl: 'partials/blockchain.html',
+                    controller: 'BlockChainCtrl',
                     controllerAs: 'vm'
                 }).
                 when('/pagination/edit/:name', {
