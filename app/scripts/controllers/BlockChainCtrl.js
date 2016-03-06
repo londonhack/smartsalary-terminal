@@ -23,7 +23,6 @@
 
             //we do nth with the time period yet
             blockChainService.executePayments(Constants.users[1].address,2,2016, function(err,results) {
-                console.log("Payment done");
                 $scope.processing = false;
             });
         };
@@ -33,8 +32,21 @@
             $scope.$apply(function() {
                 event.receiver = _this.resolveName(event.args.receiver);
                 event.sender = _this.resolveName(event.args.sender);
+                event.accepted=false;
                 $scope.logs.push(event);
-                console.log(event);
+            });
+        });
+
+        blockChainService.startWatchingBlockEntries(function(transactions){
+            var newValues=new Array();
+            angular.forEach($scope.logs,function(value,key){
+                if (transactions.indexOf(value.transactionHash)) {
+                    value.accepted=true;
+                }
+                newValues.push(value);
+            });
+            $scope.$apply(function() {
+                $scope.logs = newValues;
             });
         });
 
@@ -45,10 +57,13 @@
                 var name = blockChainService.nameOf(address);
                 return name;
             }
-            return null;
+            return address;
         };
 
 
+        $scope.clear = function(){
+            $scope.logs = new Array();
+        }
     }
 
 })(angular);

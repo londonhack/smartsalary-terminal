@@ -12,7 +12,7 @@
         </div>
         <div class="column middle aligned content center" align="center">
             <h1>10'000.00 CHF</h1>
-            <button class="massive ui right labeled icon button primary {disabled:processing}" ng-click="executePayment()">
+            <button class="massive ui right labeled icon button primary" ng-class="{'disabled':processing}" ng-click="executePayment()">
                 <i class="right arrow icon"></i>
                 PAY HER
             </button>
@@ -30,14 +30,14 @@
     </div>
     <p> </p>
     <div>
-        <h1 align="center"><i class="notched small circle {loading:processing} icon"></i> Blockchain Smart-Contracts transaction logs</h1>
+        <h2 align="center"><i class="notched small circle icon" ng-class="{'loading':processing}"></i> Blockchain Smart-Contracts transaction logs <button class="ui mini button" ng-click="clear()">Clear</button></h2>
         <table class="ui celled table">
             <thead>
             <tr>
                 <th>Source</th>
                 <th>Destination</th>
                 <th>Amount</th>
-                <th>Contract</th>
+                <th>Transaction</th>
                 <th>Status</th>
             </tr>
             </thead>
@@ -67,8 +67,8 @@
                 <td>
                     {{log.transactionHash}}
                 </td>
-                <td class="positive">
-                    <i class="icon checkmark"></i> Approved
+                <td ng-class="{'positive':log.accepted ,'warning':!log.accepted}">
+                    <i class="icon" ng-class="{'checkmark':log.accepted}"></i> <span ng-if="log.accepted">Accepted</span><span ng-if="!log.accepted">Pending</span>
                 </td>
             </tr>
             </tbody>

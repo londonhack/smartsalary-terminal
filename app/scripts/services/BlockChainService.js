@@ -20,28 +20,18 @@
         var transAddress = refContract.addressOf("Transaction");
         var companyAddress = refContract.addressOf("Company");
 
-        var contractsMap = new Object();
-        var BUAddress = refContract.addressOf("BU");
-        var AFKAddress = refContract.addressOf("AFK");
-        var ALVAddress = refContract.addressOf("ALV");
-        var LPPAddress = refContract.addressOf("LPP");
-        var AVSAddress = refContract.addressOf("AVS");
-        var FAKAddress = refContract.addressOf("FAK");
-        contractsMap[refContract.nameOf(BUAddress)] = "BU";
-        contractsMap[refContract.nameOf(AFKAddress)] = "AFK";
-        contractsMap[refContract.nameOf(LPPAddress)] = "LPP";
-        contractsMap[refContract.nameOf(AVSAddress)] = "AVS";
-        contractsMap[refContract.nameOf(ALVAddress)] = "ALV";
-        contractsMap[refContract.nameOf(FAKAddress)] = "FAK";
-
         var companyContract = web3.eth.contract(Constants.companyAbi).at(companyAddress);
         var transactionContract = web3.eth.contract(Constants.transactionAbi).at(transAddress);
 
-        this.startWatchingLogs=function(callback) {
-            filter.watch(callback);
+        this.startWatchingBlockEntries=function(callback) {
+            filter.watch(function(err,blockHash){
+                var block = web3.eth.getBlock(blockHash, function(err,blockRes) {
+                    callback(blockRes.transactions);
+                });
+            });
         };
 
-        this.stopWatchingLogs=function() {
+        this.stopWatchingBlockEntries=function() {
             filter.stopWatching();
         };
 
@@ -59,8 +49,12 @@
             return response;
         };
 
+        this.toAscii = function(string) {
+            return web3.toAscii(string);
+        };
+
         this.nameOf = function(address) {
-            return contractsMap[refContract.nameOf(address)];
+            return this.toAscii(refContract.nameOf(address)).replace(/[\x00]/g,"");
         };
     }
 })(angular);
