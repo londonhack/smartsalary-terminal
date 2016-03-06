@@ -39,8 +39,8 @@
         });
 
         this.resolveName = function(address){
-            if (address==Constants.users[1].address) return "Elliot Fu";
-            else if (address==Constants.users[0].address) return "Daniel Louise";
+            if (address==Constants.users[1].address) return "Molly";
+            else if (address==Constants.users[0].address) return "Matthew";
             else {
                 var name = blockChainService.nameOf(address);
                 return name;
